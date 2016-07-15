@@ -1,0 +1,1 @@
+Simple in-place *fast Fourier transform* implementation for `complex128` slices with a power-of-two length.  (Shorter slices should be zero-padded before the transform.)  Based on the implementation in the [Numerical Recipes](http://numerical.recipes/).
