@@ -2,26 +2,14 @@ package fft
 
 import "math"
 
-func fft1(xs []complex128, sign float64) {
+func fft(xs []complex128, sign float64) {
 	n := len(xs)
 
 	if n == 0 || n&(n-1) != 0 {
-		panic("fft1: xs length must be a power of two")
+		panic("fft: xs length must be a power of two")
 	}
 
-	// Swap xs[i] and xs[j] (once) where j = bitreverse(i, msb).
-	msb := n >> 1
-	for i, j := 1, msb; i < n; i++ {
-		if i < j {
-			xs[i], xs[j] = xs[j], xs[i]
-		}
-
-		m := msb
-		for ; j&m != 0; m >>= 1 {
-			j ^= m
-		}
-		j |= m
-	}
+	bitreverse(xs)
 
 	for stride := 1; stride < n; stride *= 2 {
 		unitAngle := sign * math.Pi / float64(stride)
@@ -36,12 +24,27 @@ func fft1(xs []complex128, sign float64) {
 	}
 }
 
+func bitreverse(xs []complex128) {
+	msb := len(xs) >> 1
+	for i, j := 1, msb; j != 0; i++ {
+		if i < j {
+			xs[i], xs[j] = xs[j], xs[i]
+		}
+
+		m := msb
+		for ; j&m != 0; m >>= 1 {
+			j ^= m
+		}
+		j |= m
+	}
+}
+
 func FFT(xs []complex128) {
-	fft1(xs, 1)
+	fft(xs, 1)
 }
 
 func IFFT(xs []complex128) {
-	fft1(xs, -1)
+	fft(xs, -1)
 	f := complex(1/float64(len(xs)), 0)
 	for i := range xs {
 		xs[i] *= f
