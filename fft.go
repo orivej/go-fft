@@ -5,10 +5,7 @@ import "math"
 func fft1(xs []complex128, sign float64) {
 	n := len(xs)
 
-	switch {
-	case n == 1:
-		return
-	case n == 0 || n&(n-1) != 0:
+	if n == 0 || n&(n-1) != 0 {
 		panic("fft1: xs length must be a power of two")
 	}
 

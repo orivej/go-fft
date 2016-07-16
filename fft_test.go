@@ -23,15 +23,17 @@ func assertInDeltaSlice(t *testing.T, expected, actual []complex128, delta float
 }
 
 func TestFFT(t *testing.T) {
-	xs := []complex128{1, 2, 3, 4}
-	ft := []complex128{10, -2 - 2i, -2, -2 + 2i}
-
-	ys := copyComplex128Slice(xs)
-	FFT(ys)
-	assertInDeltaSlice(t, ft, ys, delta)
-
-	IFFT(ys)
-	assertInDeltaSlice(t, xs, ys, delta)
+	for _, test := range [][2][]complex128{
+		{{2}, {2}},
+		{{1, 2, 3, 4}, {10, -2 - 2i, -2, -2 + 2i}},
+	} {
+		xs, ft := test[0], test[1]
+		ys := copyComplex128Slice(xs)
+		FFT(ys)
+		assertInDeltaSlice(t, ft, ys, delta)
+		IFFT(ys)
+		assertInDeltaSlice(t, xs, ys, delta)
+	}
 }
 
 func TestPanic(t *testing.T) {
