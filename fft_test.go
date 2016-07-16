@@ -25,7 +25,7 @@ func assertInDeltaSlice(t *testing.T, expected, actual []complex128, delta float
 func TestFFT(t *testing.T) {
 	for _, test := range [][2][]complex128{
 		{{2}, {2}},
-		{{1, 2, 3, 4}, {10, -2 - 2i, -2, -2 + 2i}},
+		{{1, 2, 3, 4}, {10, -2 + 2i, -2, -2 - 2i}},
 	} {
 		xs, ft := test[0], test[1]
 		ys := copyComplex128Slice(xs)

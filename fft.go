@@ -40,11 +40,11 @@ func bitreverse(xs []complex128) {
 }
 
 func FFT(xs []complex128) {
-	fft(xs, 1)
+	fft(xs, -1)
 }
 
 func IFFT(xs []complex128) {
-	fft(xs, -1)
+	fft(xs, 1)
 	f := complex(1/float64(len(xs)), 0)
 	for i := range xs {
 		xs[i] *= f
