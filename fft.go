@@ -10,7 +10,8 @@ func fft1(xs []complex128, sign float64) {
 	}
 
 	// Swap xs[i] and xs[j] (once) where j = bitreverse(i, msb).
-	for i, j, msb := 0, 0, n>>1; i < n; i++ {
+	msb := n >> 1
+	for i, j := 1, msb; i < n; i++ {
 		if i < j {
 			xs[i], xs[j] = xs[j], xs[i]
 		}
